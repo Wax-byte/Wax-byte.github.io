@@ -115,10 +115,14 @@ class World {
             Tile.prototype.drawLineSegment(ctx, this.width, y, -1, -1)
         }*/
 
-        for (let y = 0 ; y < this.height; ++y) {
-            for (let x = 0 ; x < this.width; ++x) {
-                let tile = this.getTile(x, y)
-                if (tile !== null) tile.draw(ctx, x, y)
+        for (let matY = 0 ; matY < this.height; ++matY) {
+            for (let matX = 0 ; matX < this.width; ++matX) {
+                let tile = this.getTile(matX, matY)
+                if (tile !== null) {
+                    let worldX = matX - Math.floor(matY / 2) - (matY % 2)
+                    let worldY = matX + Math.floor(matY / 2)
+                    tile.draw(ctx, worldX, worldY)
+                }
             }
         }
 
@@ -174,7 +178,7 @@ class Tile { // Tegel
 
     draw(ctx, x, y) {
         let rotated = rotateLeft(this.arr, this.rotation)
-        let middleX = x * 24 + y * 24 + 24
+        let middleX = x * 24 + y * 24 + 48
         let middleY = x * -24 + y * 24 + 24
 
         if ((x + y) % 2) {
