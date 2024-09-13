@@ -119,7 +119,7 @@ class World {
             for (let matX = 0 ; matX < this.width; ++matX) {
                 let tile = this.getTile(matX, matY)
                 if (tile !== null) {
-                    let worldX = matX - Math.floor(matY / 2) - (matY % 2)
+                    let worldX = matX - Math.floor((matY+1) / 2)
                     let worldY = matX + Math.floor(matY / 2)
                     tile.draw(ctx, worldX, worldY)
                 }
