@@ -156,18 +156,18 @@ class Tile { // Tegel
         ctx.stroke()
     }
 
-    drawCircle(ctx, x, y, dx, dy) {
+    drawCircle(ctx, middleX, middleY, dx, dy) {
         ctx.strokeStyle = "black"
         ctx.beginPath()
-        ctx.arc(x * 48 + 48 + dx * 12, y * 48 + 48 + dy * 12, 10, 0, 2 * Math.PI)
+        ctx.arc(middleX + dx * 11, middleY + dy * 11, 9, 0, 2 * Math.PI)
         ctx.stroke()
     }
 
     drawQuadrant(ctx, middleX, middleY, dx, dy, lineType) {
         if (lineType >= 1)
             this.drawLineSegment(ctx, middleX, middleY, dx, dy)
-        //if (lineType == 2)
-        //    this.drawCircle(ctx, x, y, dx, dy)
+        if (lineType == 2)
+            this.drawCircle(ctx, middleX, middleY, dx, dy)
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
