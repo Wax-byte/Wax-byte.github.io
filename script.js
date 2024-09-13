@@ -99,7 +99,7 @@ class World {
     }
 
     draw(ctx) {
-        for (let x = 0 ; x < this.width; ++x) {
+        /*for (let x = 0 ; x < this.width; ++x) {
             Tile.prototype.drawLineSegment(ctx, x, -1, 1, 1)
             Tile.prototype.drawLineSegment(ctx, x, -1, -1, 1)
 
@@ -113,7 +113,7 @@ class World {
 
             Tile.prototype.drawLineSegment(ctx, this.width, y, -1, 1)
             Tile.prototype.drawLineSegment(ctx, this.width, y, -1, -1)
-        }
+        }*/
 
         for (let y = 0 ; y < this.height; ++y) {
             for (let x = 0 ; x < this.width; ++x) {
@@ -122,7 +122,7 @@ class World {
             }
         }
 
-        ctx.globalAlpha = 0.1
+        /*ctx.globalAlpha = 0.1
         for (let y = 0 ; y < this.height + 1; ++y) {
             for (let x = 0 ; x < this.width; ++x) {
                 ctx.fillStyle = "#0000ff" //(x + y) % 2 == 0 ? "blue" : "white"
@@ -133,8 +133,7 @@ class World {
                 ctx.lineTo(x * 48 + 48, y * 48 + 48)
                 ctx.fill()
             }
-        }
-
+        }*/
     }
 }
 
@@ -149,11 +148,11 @@ class Tile { // Tegel
         this.rotation = 0
     }
 
-    drawLineSegment(ctx, x, y, dx, dy) {
+    drawLineSegment(ctx, middleX, middleY, dx, dy) {
         ctx.strokeStyle = "black"
         ctx.beginPath()
-        ctx.moveTo(x * 48 + 48, y * 48 + 48)
-        ctx.lineTo(x * 48 + 48 + dx * 24, y * 48 + 48 + dy * 24)
+        ctx.moveTo(middleX, middleY)
+        ctx.lineTo(middleX + dx * 24, middleY + dy * 24)
         ctx.stroke()
     }
 
@@ -164,29 +163,34 @@ class Tile { // Tegel
         ctx.stroke()
     }
 
-    drawQuadrant(ctx, x, y, dx, dy, lineType) {
+    drawQuadrant(ctx, middleX, middleY, dx, dy, lineType) {
         if (lineType >= 1)
-            this.drawLineSegment(ctx, x, y, dx, dy)
-        if (lineType == 2)
-            this.drawCircle(ctx, x, y, dx, dy)
+            this.drawLineSegment(ctx, middleX, middleY, dx, dy)
+        //if (lineType == 2)
+        //    this.drawCircle(ctx, x, y, dx, dy)
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
 
     draw(ctx, x, y) {
         let rotated = rotateLeft(this.arr, this.rotation)
+        let middleX = x * 24 + y * 24 + 24
+        let middleY = x * -24 + y * 24 + 24
 
         if ((x + y) % 2) {
-            ctx.beginPath()
+            ctx.beginPath()            
+            ctx.moveTo(middleX - 24, middleY)
+            ctx.lineTo(middleX     , middleY - 24)
+            ctx.lineTo(middleX + 24, middleY)
+            ctx.lineTo(middleX     , middleY + 24)
             ctx.fillStyle = "#f0f0f0"
-            ctx.rect(x * 48 + 24, y * 48 + 24, 48, 48)
             ctx.fill()
         }
 
-        this.drawQuadrant(ctx, x, y, -1, -1, rotated[0])
-        this.drawQuadrant(ctx, x, y, 1, -1, rotated[1])
-        this.drawQuadrant(ctx, x, y, 1, 1, rotated[2])
-        this.drawQuadrant(ctx, x, y, -1, 1, rotated[3])
+        this.drawQuadrant(ctx, middleX, middleY, -1, 0, rotated[0])
+        this.drawQuadrant(ctx, middleX, middleY, 0, -1, rotated[1])
+        this.drawQuadrant(ctx, middleX, middleY, 1, 0, rotated[2])
+        this.drawQuadrant(ctx, middleX, middleY, 0, 1, rotated[3])
     }
 }
 
