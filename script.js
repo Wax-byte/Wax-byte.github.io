@@ -13,7 +13,20 @@ class World {
         this.arr = new Array(width * height)
     }
 
-    getTile = (x, y) => this.arr[x + y*this.width]
+    worldToTile(worldPos) {
+        //let worldX = matX - Math.floor((matY+1) / 2)
+        //let worldY = matX + Math.floor(matY / 2)
+
+        const [worldX, worldY] = worldPos
+        const matX = worldX
+        const matY = Math.floor(worldY / 2)
+        return [matX, matY]
+    }
+
+    getTile(worldX, worldY) {
+        const [matX, matY] = this.worldToTile([worldX, worldY]) 
+        return this.arr[matX + matY*this.width]
+    }
     setTile = (x, y, tile) => this.arr[x + y*this.width] = tile
 
     upperLeftCount(x, y) {
