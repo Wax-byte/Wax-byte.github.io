@@ -13,14 +13,17 @@ class World {
         this.arr = new Array(width * height)
     }
 
-    worldToTile(worldPos) {
+    worldToTile([worldX, worldY]) {
         //let worldX = matX - Math.floor((matY+1) / 2)
         //let worldY = matX + Math.floor(matY / 2)
 
-        const [worldX, worldY] = worldPos
         const matX = worldX
         const matY = Math.floor(worldY / 2)
         return [matX, matY]
+    }
+
+    tileToWorld(tilePos) {
+
     }
 
     getTile(worldX, worldY) {
