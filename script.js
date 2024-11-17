@@ -7,10 +7,10 @@
 var quadSets = []
 
 class World {
-    constructor(width, height) {
-        this.width = width
-        this.height = height
-        this.arr = new Array(width * height)
+    constructor(matWidth, matHeight) {
+        this.matWidth = matWidth
+        this.matHeight = matHeight
+        this.arr = new Array(matWidth * matHeight)
     }
 
     worldToMatrix([worldX, worldY]) {
@@ -28,9 +28,9 @@ class World {
 
     getTile(worldX, worldY) {
         const [matX, matY] = this.worldToMatrix([worldX, worldY]) 
-        return this.arr[matX + matY*this.width]
+        return this.arr[matX + matY*this.matWidth]
     }
-    setTile = (x, y, tile) => this.arr[x + y*this.width] = tile
+    setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     upperLeftCount(x, y) {
         let count = 0
@@ -66,7 +66,7 @@ class World {
 
         if (tile.getSegment(1) >= 1) {
             if (y > 0 && this.getTile(x, y-1).getSegment(2) >= 1) ++score
-            if (x < this.width-1 && y > 0 && this.getTile(x+1, y-1).getSegment(2) >= 1) ++score
+            if (x < this.matWidth-1 && y > 0 && this.getTile(x+1, y-1).getSegment(2) >= 1) ++score
         }
         return score
     }
@@ -83,8 +83,8 @@ class World {
     fitScoreTotal = (x, y, tile) => this.fitScoreNW(x, y, tile) + this.fitScoreNE(x, y, tile) + this.fitScoreSW(x, y, tile)
 
     create() {
-        for (let y = 0 ; y < this.height; ++y) {
-            for (let x = 0 ; x < this.width; ++x) {        
+        for (let y = 0 ; y < this.matHeight; ++y) {
+            for (let x = 0 ; x < this.matWidth; ++x) {        
                 shuffle(tiles) // shuffle remaining tiles
                 for(let tileIdx = 0; true; ++tileIdx) {
                     let tile = tiles[tileIdx]
@@ -115,24 +115,24 @@ class World {
     }
 
     draw(ctx) {
-        /*for (let x = 0 ; x < this.width; ++x) {
+        /*for (let x = 0 ; x < this.matWidth; ++x) {
             Tile.prototype.drawLineSegment(ctx, x, -1, 1, 1)
             Tile.prototype.drawLineSegment(ctx, x, -1, -1, 1)
 
-            Tile.prototype.drawLineSegment(ctx, x, this.height, 1, -1)
-            Tile.prototype.drawLineSegment(ctx, x, this.height, -1, -1)
+            Tile.prototype.drawLineSegment(ctx, x, this.matHeight, 1, -1)
+            Tile.prototype.drawLineSegment(ctx, x, this.matHeight, -1, -1)
         }
 
-        for (let y = 0 ; y < this.height; ++y) {
+        for (let y = 0 ; y < this.matHeight; ++y) {
             Tile.prototype.drawLineSegment(ctx, -1, y, 1, 1)
             Tile.prototype.drawLineSegment(ctx, -1, y, 1, -1)
 
-            Tile.prototype.drawLineSegment(ctx, this.width, y, -1, 1)
-            Tile.prototype.drawLineSegment(ctx, this.width, y, -1, -1)
+            Tile.prototype.drawLineSegment(ctx, this.matWidth, y, -1, 1)
+            Tile.prototype.drawLineSegment(ctx, this.matWidth, y, -1, -1)
         }*/
 
-        for (let matY = 0 ; matY < this.height; ++matY) {
-            for (let matX = 0 ; matX < this.width; ++matX) {
+        for (let matY = 0 ; matY < this.matHeight; ++matY) {
+            for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
                 if (tile !== null) {
                     let worldX = matX - Math.floor((matY+1) / 2)
@@ -143,8 +143,8 @@ class World {
         }
 
         /*ctx.globalAlpha = 0.1
-        for (let y = 0 ; y < this.height + 1; ++y) {
-            for (let x = 0 ; x < this.width; ++x) {
+        for (let y = 0 ; y < this.matHeight + 1; ++y) {
+            for (let x = 0 ; x < this.matWidth; ++x) {
                 ctx.fillStyle = "#0000ff" //(x + y) % 2 == 0 ? "blue" : "white"
                 ctx.beginPath()
                 ctx.moveTo(x * 48 + 24, y * 48 + 24)
@@ -214,7 +214,7 @@ class Tile { // Tegel
     }
 }
 
-var mult = (world.width * world.height) / 33
+var mult = (world.matWidth * world.matHeight) / 33
 var tiles = []
 for (let i = 0; i < 18 * mult; ++i)
     tiles.push(new Tile([1,0,1,0]))
