@@ -52,21 +52,22 @@ class World {
     fitScoreTotal = (x, y) => this.fitCornerScore(x, y) + this.fitCornerScore(x+1, y) + this.fitCornerScore(x, y+1) + this.fitCornerScore(x+1, y+1)
 
     create() {
-        for (let y = 0 ; y < this.matHeight; ++y) {
-            for (let x = 0 ; x < this.matWidth; ++x) {       
+        for (let matY = 0 ; matY < this.matHeight; ++matY) {
+            for (let matX = 0 ; matX < this.matWidth; ++matX) {       
                 if (tiles.length == 0) return // when empty 
                 shuffle(tiles) // shuffle remaining tiles
                 for(let tileIdx = 0; true; ++tileIdx) {
                     let tile = tiles[tileIdx]
                     
                     tile.rotation = getRandomInt(4)
-                    this.setTile(x, y, tile)
+                    this.setTile(matX, matY, tile)
 
                     let maxScore = -1
                     let maxRotation = 0
                     for (let i = 0; i < 4; ++i) {
                         tile.rotation = (tile.rotation + 1) % 4
-                        let score = this.fitScoreTotal(x, y, tile)
+
+                        let score = this.fitScoreTotal(matX, matY, tile) // TODO should not use matX and matY here
                         if (score > maxScore) {
                             maxScore = score
                             maxRotation = tile.rotation
