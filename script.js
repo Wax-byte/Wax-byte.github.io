@@ -104,9 +104,8 @@ class World {
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
-                if (tile !== null) {
-                    let worldX = matX - Math.floor((matY+1) / 2)
-                    let worldY = matX + Math.floor(matY / 2)
+                if (tile !== null) {                    
+                    const [worldX, worldY] = this.matrixToWorld(matX, matY)
                     tile.draw(ctx, worldX, worldY)
                 }
             }
