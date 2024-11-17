@@ -72,7 +72,7 @@ class World {
                         tile.rotation = (tile.rotation + 1) % 4
 
                         const [worldX, worldY] = this.matrixToWorld(matX, matY)
-                        let score = this.fitScoreTotal(worldX, worldY, tile)
+                        let score = this.fitScoreTotal(worldX, worldY)
                         if (score > maxScore) {
                             maxScore = score
                             maxRotation = tile.rotation
