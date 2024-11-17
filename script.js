@@ -42,45 +42,24 @@ class World {
         return count    
     }
 
-    // for upper left
-    fitScoreNW(x, y, tile) {
-        let score = 0
+    fitCornerScore(x, y) {
+        const tileNW = this.getTile(x, y)
+        const tileNE = this.getTile(x+1, y)
+        const tileSE = this.getTile(x+1, y+1)
+        const tileSW = this.getTile(x, y+1)
 
-        if (x > 0 && y > 0) {
-            let upperLeftCount = this.upperLeftCount(x, y)
+        // only if all tiles are there we can decide the score
+        if (tileNW == null || tileNE == null || tileSW == null || tileSE == null) return 0
 
-            if (upperLeftCount == 1 && tile.getSegment(0) == 0) return -3 // so guaranteed below 0
-            if (upperLeftCount == 0 && tile.getSegment(0) >= 1) return -3 // so guaranteed below 0
-        }
+        // count walls towards (x, y)
+        const wallCount = Math.min(1, tileNW.getSegment(2)) + Math.min(1, tileNE.getSegment(3)) + Math.min(1, tileSE.getSegment(0)) + Math.min(1, tileSW.getSegment(1))
 
-        if (tile.getSegment(0) >= 1) {
-            if (x > 0 && y > 0 && this.getTile(x-1, y-1).getSegment(2) >= 1) ++score
-            if (y > 0 && this.getTile(x, y-1).getSegment(3) >= 1) ++score
-            if (x > 0 && this.getTile(x-1, y).getSegment(1) >= 1) ++score
-        }
-        return score
+        if (wallCount == 1) return -1000 // BAD
+
+        return 0
     }
 
-    fitScoreNE(x, y, tile) {
-        let score = 0
-
-        if (tile.getSegment(1) >= 1) {
-            if (y > 0 && this.getTile(x, y-1).getSegment(2) >= 1) ++score
-            if (x < this.matWidth-1 && y > 0 && this.getTile(x+1, y-1).getSegment(2) >= 1) ++score
-        }
-        return score
-    }
-
-    fitScoreSW(x, y, tile) {
-        let score = 0
-
-        if (tile.getSegment(3) >= 1)
-            if (x > 0 && this.getTile(x-1, y).getSegment(2) >= 1) ++score
-        
-        return score
-    }
-
-    fitScoreTotal = (x, y, tile) => this.fitScoreNW(x, y, tile) + this.fitScoreNE(x, y, tile) + this.fitScoreSW(x, y, tile)
+    fitScoreTotal = (x, y) => this.fitCornerScore(x, y) + this.fitCornerScore(x+1, y) + this.fitCornerScore(x, y+1) + this.fitCornerScore(x+1, y+1)
 
     create() {
         for (let y = 0 ; y < this.matHeight; ++y) {
@@ -90,6 +69,7 @@ class World {
                     let tile = tiles[tileIdx]
                     
                     tile.rotation = getRandomInt(4)
+                    this.setTile(x, y, tile)
 
                     let maxScore = -1
                     let maxRotation = 0
@@ -104,7 +84,6 @@ class World {
 
                     if (maxScore >= 0 || tileIdx == tiles.length-1) {
                         tile.rotation = maxRotation
-                        this.setTile(x, y, tile)
                         tiles.splice(tileIdx, 1)
                         if (tiles.length == 0) return
                         break
