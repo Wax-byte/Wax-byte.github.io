@@ -129,7 +129,7 @@ class World {
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 
-var world = new World(canvas.width / 48 - 1, canvas.height / 48 - 1)
+var world = new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
 
 class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
