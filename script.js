@@ -33,10 +33,10 @@ class World {
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     fitCornerScore(x, y) {
-        const tileNW = this.getTile(x, y)
-        const tileNE = this.getTile(x+1, y)
-        const tileSE = this.getTile(x+1, y+1)
-        const tileSW = this.getTile(x, y+1)
+        const tileNW = this.getTile(x-1, y-1)
+        const tileNE = this.getTile(x, y-1)
+        const tileSE = this.getTile(x, y)
+        const tileSW = this.getTile(x-1, y)
 
         // only if all tiles are there we can decide the score
         if (tileNW == null || tileNE == null || tileSW == null || tileSE == null) return 0
@@ -53,7 +53,8 @@ class World {
 
     create() {
         for (let y = 0 ; y < this.matHeight; ++y) {
-            for (let x = 0 ; x < this.matWidth; ++x) {        
+            for (let x = 0 ; x < this.matWidth; ++x) {       
+                if (tiles.length == 0) return // when empty 
                 shuffle(tiles) // shuffle remaining tiles
                 for(let tileIdx = 0; true; ++tileIdx) {
                     let tile = tiles[tileIdx]
@@ -72,10 +73,9 @@ class World {
                         }
                     }
 
-                    if (maxScore >= 0 || tileIdx == tiles.length-1) {
+                    if (maxScore >= 0 || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
                         tile.rotation = maxRotation
                         tiles.splice(tileIdx, 1)
-                        if (tiles.length == 0) return
                         break
                     }
                 }
