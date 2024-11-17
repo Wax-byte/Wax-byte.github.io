@@ -32,16 +32,6 @@ class World {
     }
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
-    upperLeftCount(x, y) {
-        let count = 0
-
-        if (this.getTile(x-1, y-1).getSegment(2) >= 1) ++count
-        if (this.getTile(x, y-1).getSegment(3) >= 1) ++count
-        if (this.getTile(x-1, y).getSegment(1) >= 1) ++count
-
-        return count    
-    }
-
     fitCornerScore(x, y) {
         const tileNW = this.getTile(x, y)
         const tileNE = this.getTile(x+1, y)
