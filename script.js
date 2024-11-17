@@ -38,10 +38,15 @@ class World {
         const tileSW = this.getTile(x-1, y)
 
         // only if all tiles are there we can decide the score
-        if (tileNW == null || tileNE == null || tileSW == null || tileSE == null) return 0
+        if (tileNW === null || tileNE === null || tileSW === null || tileSE === null) return 0
 
         // count walls towards (x, y)
-        const wallCount = Math.min(1, tileNW.getSegment(2)) + Math.min(1, tileNE.getSegment(3)) + Math.min(1, tileSE.getSegment(0)) + Math.min(1, tileSW.getSegment(1))
+        var wallCount = 0
+        
+        if (tileNW != undefined) Math.min(1, tileNW.getSegment(2))
+        if (tileNE != undefined) Math.min(1, tileNE.getSegment(3))
+        if (tileSE != undefined) Math.min(1, tileSE.getSegment(0))
+        if (tileSW != undefined) Math.min(1, tileSW.getSegment(1))
 
         if (wallCount == 1) return -1000 // BAD
 
@@ -129,7 +134,7 @@ class World {
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 
-var world = new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
+var world = new World(4, 8) //new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
 
 class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
