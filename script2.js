@@ -111,7 +111,7 @@ class World {
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
-                if (tile !== null) {                    
+                if (tile !== null) {
                     tile.draw(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
                 }
             }
@@ -145,7 +145,7 @@ class Tile { // Tegel
         ctx.stroke()
     }
 
-    drawQuadrant(ctx, x, y, dx, dy, lineType) {
+    drawLineOrCircle(ctx, x, y, dx, dy, lineType) {
         if (lineType >= 1)
             this.drawLineSegment(ctx, x, y, dx, dy)
         if (lineType == 2)
@@ -162,14 +162,14 @@ class Tile { // Tegel
         ctx.fill()
 
 
-        this.drawQuadrant(ctx, middleX - 1, middleY - 1, 1, 0, this.arr[0])
-        this.drawQuadrant(ctx, middleX, middleY - 1, 1, 0, this.arr[1])
-        this.drawQuadrant(ctx, middleX - 1, middleY, 1, 0, this.arr[2])
-        this.drawQuadrant(ctx, middleX, middleY, 1, 0, this.arr[3])
-        this.drawQuadrant(ctx, middleX - 1, middleY - 1, 0, 1, this.arr[4])
-        this.drawQuadrant(ctx, middleX - 1, middleY, 0, 1, this.arr[5])
-        this.drawQuadrant(ctx, middleX, middleY - 1, 0, 1, this.arr[6])
-        this.drawQuadrant(ctx, middleX, middleY, 0, 1, this.arr[7])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY - 1, 1, 0, this.arr[0])
+        this.drawLineOrCircle(ctx, middleX, middleY - 1, 1, 0, this.arr[1])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY, 1, 0, this.arr[2])
+        this.drawLineOrCircle(ctx, middleX, middleY, 1, 0, this.arr[3])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY - 1, 0, 1, this.arr[4])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY, 0, 1, this.arr[5])
+        this.drawLineOrCircle(ctx, middleX, middleY - 1, 0, 1, this.arr[6])
+        this.drawLineOrCircle(ctx, middleX, middleY, 0, 1, this.arr[7])
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
