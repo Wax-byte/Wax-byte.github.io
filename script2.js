@@ -55,22 +55,54 @@ class World {
     fitScoreTotal = (x, y) => this.fitCornerScore(x, y) + this.fitCornerScore(x+1, y) + this.fitCornerScore(x, y+1) + this.fitCornerScore(x+1, y+1)
 
     create() {
-        for (let matY = 0 ; matY < this.matHeight; ++matY) {
-            for (let matX = 0 ; matX < this.matWidth; ++matX) {       
-                if (tiles.length == 0) return // when empty 
-                shuffle(tiles) // shuffle remaining tiles
-                for(let tileIdx = 0; true; ++tileIdx) {
-                    let tile = tiles[tileIdx]
-                    
-                    //tile.rotation = getRandomInt(4)
-                    this.setTile(matX, matY, tile)
+        let matX = Math.floor(this.matWidth / 2);
+        let matY = Math.floor(this.matHeight / 2);
+        const stopLength = 50;
+        let length = 0;
 
-                    if (/*maxScore >= 0 ||*/ tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
-                        //tile.rotation = maxRotation
-                        tiles.splice(tileIdx, 1)
-                        break
-                    }
-                }
+        while (length < stopLength) {
+            for (let i = 0; i <= length; ++i) {
+                this.placeTile(matX, matY)
+                ++matY;
+            }
+            for (let i = 0; i < length; ++i) {
+                this.placeTile(matX, matY)
+                --matX;
+            }
+            ++length
+
+            for (let i = 0; i <= length; ++i) {
+                this.placeTile(matX, matY)
+                --matY;
+            }
+            for (let i = 0; i < length; ++i) {
+                this.placeTile(matX, matY)
+                ++matX;
+            }
+            ++length
+        }
+
+    }
+
+    placeTile(matX, matY) {
+        if (tiles.length == 0) return // when empty
+
+        if (matX < 0) return;
+        if (matX > this.matWidth) return;
+        if (matY < 0) return;
+        if (matY > this.matHeight) return;
+
+        shuffle(tiles) // shuffle remaining tiles
+        for(let tileIdx = 0; true; ++tileIdx) {
+            let tile = tiles[tileIdx]
+            
+            //tile.rotation = getRandomInt(4)
+            this.setTile(matX, matY, tile)
+
+            if (/*maxScore >= 0 ||*/ tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
+                //tile.rotation = maxRotation
+                tiles.splice(tileIdx, 1)
+                break
             }
         }
     }
@@ -119,7 +151,7 @@ class World {
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 
-var world = new World(4, 8) //new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
+var world = new World(8, 8) //new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
 
 class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
