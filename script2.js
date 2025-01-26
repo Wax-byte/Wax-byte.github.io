@@ -96,7 +96,7 @@ class World {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
                 if (tile !== null) {                    
-                    tile.drawTile(ctx, matX*2, matY*2)
+                    tile.drawTile(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
                 }
             }
         }
@@ -150,6 +150,15 @@ class Tile { // Tegel
     }
 
     drawTile(ctx, middleX, middleY) {
+        ctx.fillStyle = (middleX + middleY) % 4 == 0 ? "#0000ff10" : "#ffffff10" // "blue" : "white"
+        ctx.beginPath()
+        ctx.moveTo(middleX * 24 - 24, middleY * 24 - 24)
+        ctx.lineTo(middleX * 24 + 24, middleY * 24 - 24)
+        ctx.lineTo(middleX * 24 + 24, middleY * 24 + 24)
+        ctx.lineTo(middleX * 24 - 24, middleY * 24 + 24)
+        ctx.fill()
+
+
         this.drawQuadrant(ctx, middleX - 1, middleY - 1, 1, 0, this.arr[0])
         this.drawQuadrant(ctx, middleX, middleY - 1, 1, 0, this.arr[1])
         this.drawQuadrant(ctx, middleX - 1, middleY, 1, 0, this.arr[2])
