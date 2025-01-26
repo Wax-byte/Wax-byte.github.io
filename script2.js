@@ -108,22 +108,6 @@ class World {
     }
 
     draw(ctx) {
-        /*for (let x = 0 ; x < this.matWidth; ++x) {
-            Tile.prototype.drawLineSegment(ctx, x, -1, 1, 1)
-            Tile.prototype.drawLineSegment(ctx, x, -1, -1, 1)
-
-            Tile.prototype.drawLineSegment(ctx, x, this.matHeight, 1, -1)
-            Tile.prototype.drawLineSegment(ctx, x, this.matHeight, -1, -1)
-        }
-
-        for (let y = 0 ; y < this.matHeight; ++y) {
-            Tile.prototype.drawLineSegment(ctx, -1, y, 1, 1)
-            Tile.prototype.drawLineSegment(ctx, -1, y, 1, -1)
-
-            Tile.prototype.drawLineSegment(ctx, this.matWidth, y, -1, 1)
-            Tile.prototype.drawLineSegment(ctx, this.matWidth, y, -1, -1)
-        }*/
-
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
@@ -132,19 +116,6 @@ class World {
                 }
             }
         }
-
-        /*ctx.globalAlpha = 0.1
-        for (let y = 0 ; y < this.matHeight + 1; ++y) {
-            for (let x = 0 ; x < this.matWidth; ++x) {
-                ctx.fillStyle = "#0000ff" //(x + y) % 2 == 0 ? "blue" : "white"
-                ctx.beginPath()
-                ctx.moveTo(x * 48 + 24, y * 48 + 24)
-                ctx.lineTo(x * 48 + 48, y * 48)
-                ctx.lineTo(x * 48 + 72, y * 48 + 24)
-                ctx.lineTo(x * 48 + 48, y * 48 + 48)
-                ctx.fill()
-            }
-        }*/
     }
 }
 
