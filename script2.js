@@ -150,7 +150,8 @@ class World {
         if (downLeftTile === undefined) downLeftCorner = 2
         else if (downLeftTile.arr[1] > 0) ++downLeftCorner
 
-        return left == 0 && right == 0 && up == 0 && down == 0 && upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
+        //return left == 0 && right == 0 && up == 0 && down == 0 && upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
+        return upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
     }
 
     draw(ctx) {
@@ -159,6 +160,16 @@ class World {
                 let tile = this.getTile(matX, matY)
                 if (tile != null) { // also false when undefined
                     tile.draw(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
+                } else {
+                    const middleX = 1 + matX*2
+                    const middleY = 1 + matY*2
+                    ctx.fillStyle = "#000000"
+                    ctx.beginPath()
+                    ctx.moveTo(middleX * 24 - 24, middleY * 24 - 24)
+                    ctx.lineTo(middleX * 24 + 24, middleY * 24 - 24)
+                    ctx.lineTo(middleX * 24 + 24, middleY * 24 + 24)
+                    ctx.lineTo(middleX * 24 - 24, middleY * 24 + 24)
+                    ctx.fill()
                 }
             }
         }
@@ -224,9 +235,9 @@ var mult = 1 // (world.matWidth * world.matHeight) / 33
 var tiles = []
 for (let i = 0; i < 8 * mult; ++i) // empty
     tiles.push(new Tile([0, 0, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 28 * mult; ++i) // up line
+for (let i = 0; i < 14 * mult; ++i) // up line
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // left line
+for (let i = 0; i < 14 * mult; ++i) // left line
     tiles.push(new Tile([0, 0, 0, 0, 1, 1, 0, 0]))
 for (let i = 0; i < 0 * mult; ++i) // big corner
     tiles.push(new Tile([1, 1, 0, 0, 1, 1, 0, 0]))
