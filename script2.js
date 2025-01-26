@@ -249,23 +249,23 @@ for (let i = 0; i < 14 * mult; ++i) // up line
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 0, 0]))
 for (let i = 0; i < 14 * mult; ++i) // left line
     tiles.push(new Tile([0, 0, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // big corner
+for (let i = 0; i < 4 * mult; ++i) // big corner
     tiles.push(new Tile([1, 1, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // up up
+for (let i = 0; i < 2 * mult; ++i) // up up
     tiles.push(new Tile([1, 1, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // left left
+for (let i = 0; i < 2 * mult; ++i) // left left
     tiles.push(new Tile([0, 1, 0, 0, 1, 1, 1, 1]))
-for (let i = 0; i < 0 * mult; ++i) // hor
+for (let i = 0; i < 1 * mult; ++i) // hor
     tiles.push(new Tile([0, 0, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // hor2 (new)
+for (let i = 0; i < 1 * mult; ++i) // hor2 (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 0, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // hor-T (new)
+for (let i = 0; i < 1 * mult; ++i) // hor-T (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
-for (let i = 0; i < 0 * mult; ++i) // vert
+for (let i = 0; i < 1 * mult; ++i) // vert
     tiles.push(new Tile([0, 1, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 0 * mult; ++i) // vert2 (new)
+for (let i = 0; i < 1 * mult; ++i) // vert2 (new)
     tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 0 * mult; ++i) // vert-T (new)
+for (let i = 0; i < 1 * mult; ++i) // vert-T (new)
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
