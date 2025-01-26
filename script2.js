@@ -33,7 +33,7 @@ class World {
     create() {
         let matX = Math.floor(this.matWidth / 2);
         let matY = Math.floor(this.matHeight / 2);
-        const stopLength = 2;
+        const stopLength = 4;
         let length = 0;
 
         while (length < stopLength) {
@@ -73,9 +73,10 @@ class World {
             let tile = tiles[tileIdx]
             
             //tile.rotation = getRandomInt(4)
-            this.setTile(matX, matY, tile)
+            //this.setTile(matX, matY, tile)
 
             if (this.tileAllowed(matX, matY, tile) || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
+                this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
                 break
@@ -98,6 +99,12 @@ class World {
         let upRightCorner = 0
         let downLeftCorner = 0
         //let downRightCorner = 0
+
+        if (tile.arr[0] > 0) ++upLeftCorner
+        if (tile.arr[1] > 0) ++upRightCorner
+        if (tile.arr[4] > 0) ++upLeftCorner 
+        if (tile.arr[5] > 0) ++downLeftCorner 
+
         const leftTile = this.getTile(matX - 1, matY)
         const rightTile = this.getTile(matX + 1, matY)
         const upTile = this.getTile(matX, matY - 1)
@@ -232,7 +239,7 @@ for (let i = 0; i < 5 * mult; ++i) // hor
 for (let i = 0; i < 5 * mult; ++i) // hor2 (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 0, 0, 0]))
 for (let i = 0; i < 5 * mult; ++i) // hor-T (new)
-tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
+    tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
 for (let i = 0; i < 5 * mult; ++i) // vert
     tiles.push(new Tile([0, 1, 0, 0, 0, 0, 1, 1]))
 for (let i = 0; i < 5 * mult; ++i) // vert2 (new)
