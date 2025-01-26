@@ -1,7 +1,7 @@
 'use strict';
 
 
-Math.seedrandom('any string you like'); //setting the random seed
+//Math.seedrandom('any string you like1'); //setting the random seed
 
 function randomIntFromInterval(min,upperbound)
 {
@@ -41,10 +41,11 @@ class World {
     create() {
         let matX = Math.floor(this.matWidth / 2);
         let matY = Math.floor(this.matHeight / 2);
-        const stopLength = 2;
+        const stopLength = 4;
         let length = 0;
 
-        while (length < stopLength) {
+        while (true) {
+            if (length >= stopLength) break
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 ++matY;
@@ -54,8 +55,8 @@ class World {
                 --matX;
             }
             ++length
-            if (length >= stopLength) break
 
+            if (length >= stopLength) break
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 --matY;
@@ -135,6 +136,7 @@ class World {
         } else {
             if (rightTile.arr[2] > 0) ++right
             if (rightTile.arr[0] > 0) ++upRightCorner
+            if (rightTile.arr[4] > 0) ++upRightCorner
         }
         
         if (upTile === undefined) {
@@ -150,6 +152,7 @@ class World {
             downLeftCorner = 2 // so surely ok
         } else {
             if (downTile.arr[6] > 0) ++down;
+            if (downTile.arr[0] > 0) ++downLeftCorner
             if (downTile.arr[4] > 0) ++downLeftCorner
         }
 
@@ -158,8 +161,7 @@ class World {
         if (downLeftTile === undefined) downLeftCorner = 2
         else if (downLeftTile.arr[1] > 0) ++downLeftCorner
 
-        //return left == 0 && right == 0 && up == 0 && down == 0 && upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
-        return upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
+        return left == 0 && right == 0 && up == 0 && down == 0 && upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
     }
 
     draw(ctx) {
