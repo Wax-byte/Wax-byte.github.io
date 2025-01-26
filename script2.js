@@ -112,7 +112,7 @@ class World {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
                 if (tile !== null) {                    
-                    tile.drawTile(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
+                    tile.draw(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
                 }
             }
         }
@@ -152,7 +152,7 @@ class Tile { // Tegel
             this.drawCircle(ctx, x, y, dx, dy)
     }
 
-    drawTile(ctx, middleX, middleY) {
+    draw(ctx, middleX, middleY) {
         ctx.fillStyle = (middleX + middleY) % 4 == 0 ? "#0000ff10" : "#ffffff10" // "blue" : "white"
         ctx.beginPath()
         ctx.moveTo(middleX * 24 - 24, middleY * 24 - 24)
@@ -173,27 +173,6 @@ class Tile { // Tegel
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
-
-    draw(ctx, x, y) {
-        let rotated = rotateLeft(this.arr, this.rotation)
-        let middleX = x * 24 + y * 24 + 48
-        let middleY = x * -24 + y * 24 + 24
-
-        if ((x + y) % 2) {
-            ctx.beginPath()            
-            ctx.moveTo(middleX - 24, middleY)
-            ctx.lineTo(middleX     , middleY - 24)
-            ctx.lineTo(middleX + 24, middleY)
-            ctx.lineTo(middleX     , middleY + 24)
-            ctx.fillStyle = "#f0f0f0"
-            ctx.fill()
-        }
-
-        this.drawQuadrant(ctx, middleX, middleY, -1, 0, rotated[0])
-        this.drawQuadrant(ctx, middleX, middleY, 0, -1, rotated[1])
-        this.drawQuadrant(ctx, middleX, middleY, 1, 0, rotated[2])
-        this.drawQuadrant(ctx, middleX, middleY, 0, 1, rotated[3])
-    }
 }
 
 var mult = 2 // (world.matWidth * world.matHeight) / 33
