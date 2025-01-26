@@ -64,9 +64,9 @@ class World {
         if (tiles.length == 0) return // when empty
 
         if (matX < 0) return;
-        if (matX > this.matWidth) return;
+        if (matX >= this.matWidth) return;
         if (matY < 0) return;
-        if (matY > this.matHeight) return;
+        if (matY >= this.matHeight) return;
 
         shuffle(tiles) // shuffle remaining tiles
         for(let tileIdx = 0; true; ++tileIdx) {
@@ -206,15 +206,14 @@ class Tile { // Tegel
         ctx.lineTo(middleX * 24 - 24, middleY * 24 + 24)
         ctx.fill()
 
-
         this.drawLineOrCircle(ctx, middleX - 1, middleY - 1, 1, 0, this.arr[0])
-        this.drawLineOrCircle(ctx, middleX, middleY - 1, 1, 0, this.arr[1])
-        this.drawLineOrCircle(ctx, middleX - 1, middleY, 1, 0, this.arr[2])
-        this.drawLineOrCircle(ctx, middleX, middleY, 1, 0, this.arr[3])
+        this.drawLineOrCircle(ctx, middleX    , middleY - 1, 1, 0, this.arr[1])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY    , 1, 0, this.arr[2])
+        this.drawLineOrCircle(ctx, middleX    , middleY    , 1, 0, this.arr[3])
         this.drawLineOrCircle(ctx, middleX - 1, middleY - 1, 0, 1, this.arr[4])
-        this.drawLineOrCircle(ctx, middleX - 1, middleY, 0, 1, this.arr[5])
-        this.drawLineOrCircle(ctx, middleX, middleY - 1, 0, 1, this.arr[6])
-        this.drawLineOrCircle(ctx, middleX, middleY, 0, 1, this.arr[7])
+        this.drawLineOrCircle(ctx, middleX - 1, middleY    , 0, 1, this.arr[5])
+        this.drawLineOrCircle(ctx, middleX    , middleY - 1, 0, 1, this.arr[6])
+        this.drawLineOrCircle(ctx, middleX    , middleY    , 0, 1, this.arr[7])
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
