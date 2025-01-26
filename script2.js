@@ -139,6 +139,8 @@ class World {
             upRightCorner = 2
         } else {
             if (rightTile.arr[2] > 0) ++right
+            if (rightTile.arr[4] > 0) ++right
+            if (rightTile.arr[5] > 0) ++right
             if (rightTile.arr[0] > 0) ++upRightCorner
             if (rightTile.arr[4] > 0) ++upRightCorner
         }
@@ -155,6 +157,8 @@ class World {
             down = 0
             downLeftCorner = 2 // so surely ok
         } else {
+            if (downTile.arr[0] > 0) ++down;
+            if (downTile.arr[1] > 0) ++down;
             if (downTile.arr[6] > 0) ++down;
             if (downTile.arr[0] > 0) ++downLeftCorner
             if (downTile.arr[4] > 0) ++downLeftCorner
