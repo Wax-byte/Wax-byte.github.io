@@ -33,7 +33,7 @@ class World {
     create() {
         let matX = Math.floor(this.matWidth / 2);
         let matY = Math.floor(this.matHeight / 2);
-        const stopLength = 4;
+        const stopLength = 2;
         let length = 0;
 
         while (length < stopLength) {
@@ -46,6 +46,7 @@ class World {
                 --matX;
             }
             ++length
+            if (length >= stopLength) break
 
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
@@ -219,31 +220,31 @@ class Tile { // Tegel
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
 }
 
-var mult = 2 // (world.matWidth * world.matHeight) / 33
+var mult = 1 // (world.matWidth * world.matHeight) / 33
 var tiles = []
-for (let i = 0; i < 18 * mult; ++i) // empty
+for (let i = 0; i < 8 * mult; ++i) // empty
     tiles.push(new Tile([0, 0, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 7 * mult; ++i) // up line
+for (let i = 0; i < 28 * mult; ++i) // up line
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 7 * mult; ++i) // left line
+for (let i = 0; i < 0 * mult; ++i) // left line
     tiles.push(new Tile([0, 0, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 6 * mult; ++i) // big corner
+for (let i = 0; i < 0 * mult; ++i) // big corner
     tiles.push(new Tile([1, 1, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // up up
+for (let i = 0; i < 0 * mult; ++i) // up up
     tiles.push(new Tile([1, 1, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // left left
+for (let i = 0; i < 0 * mult; ++i) // left left
     tiles.push(new Tile([0, 1, 0, 0, 1, 1, 1, 1]))
-for (let i = 0; i < 5 * mult; ++i) // hor
+for (let i = 0; i < 0 * mult; ++i) // hor
     tiles.push(new Tile([0, 0, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // hor2 (new)
+for (let i = 0; i < 0 * mult; ++i) // hor2 (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 0, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // hor-T (new)
+for (let i = 0; i < 0 * mult; ++i) // hor-T (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // vert
+for (let i = 0; i < 0 * mult; ++i) // vert
     tiles.push(new Tile([0, 1, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 5 * mult; ++i) // vert2 (new)
+for (let i = 0; i < 0 * mult; ++i) // vert2 (new)
     tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 5 * mult; ++i) // vert-T (new)
+for (let i = 0; i < 0 * mult; ++i) // vert-T (new)
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
