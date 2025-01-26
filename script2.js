@@ -30,52 +30,28 @@ class World {
     }
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
-    fitCornerScore(x, y) {
-        const tileNW = this.getTile(x-1, y-1)
-        const tileNE = this.getTile(x, y-1)
-        const tileSE = this.getTile(x, y)
-        const tileSW = this.getTile(x-1, y)
-
-        // only if all tiles are there we can decide the score
-        if (tileNW === null || tileNE === null || tileSW === null || tileSE === null) return 0
-
-        // count walls towards (x, y)
-        var wallCount = 0
-        
-        if (tileNW != undefined) Math.min(1, tileNW.getSegment(2))
-        if (tileNE != undefined) Math.min(1, tileNE.getSegment(3))
-        if (tileSE != undefined) Math.min(1, tileSE.getSegment(0))
-        if (tileSW != undefined) Math.min(1, tileSW.getSegment(1))
-
-        if (wallCount == 1) return -1000 // BAD
-
-        return 0
-    }
-
-    fitScoreTotal = (x, y) => this.fitCornerScore(x, y) + this.fitCornerScore(x+1, y) + this.fitCornerScore(x, y+1) + this.fitCornerScore(x+1, y+1)
-
     create() {
         let matX = Math.floor(this.matWidth / 2);
         let matY = Math.floor(this.matHeight / 2);
-        const stopLength = 50;
+        const stopLength = 2;
         let length = 0;
 
         while (length < stopLength) {
-            for (let i = 0; i <= length; ++i) {
+            for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 ++matY;
             }
-            for (let i = 0; i < length; ++i) {
+            for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
                 --matX;
             }
             ++length
 
-            for (let i = 0; i <= length; ++i) {
+            for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 --matY;
             }
-            for (let i = 0; i < length; ++i) {
+            for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
                 ++matX;
             }
@@ -99,7 +75,7 @@ class World {
             //tile.rotation = getRandomInt(4)
             this.setTile(matX, matY, tile)
 
-            if (/*maxScore >= 0 ||*/ tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
+            if (this.tileAllowed(matX, matY, tile) || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
                 break
@@ -107,11 +83,73 @@ class World {
         }
     }
 
+    tileAllowed(matX, matY, tile) {
+        let left = 0
+        let right = 0
+        let up = 0
+        let down = 0
+
+        if (tile.arr[2] > 0) --left;
+        if (tile.arr[3] > 0) --right;
+        if (tile.arr[6] > 0) --up;
+        if (tile.arr[7] > 0) --down;
+
+        let upLeftCorner = 0
+        let upRightCorner = 0
+        let downLeftCorner = 0
+        //let downRightCorner = 0
+        const leftTile = this.getTile(matX - 1, matY)
+        const rightTile = this.getTile(matX + 1, matY)
+        const upTile = this.getTile(matX, matY - 1)
+        const downTile = this.getTile(matX, matY + 1)
+        const upRightTile = this.getTile(matX + 1, matY - 1)
+        const downLeftTile = this.getTile(matX - 1, matY + 1)
+
+        if (leftTile === undefined) {
+            left = 0
+            upLeftCorner = 2
+        } else {
+            if (leftTile.arr[3] > 0) ++left
+            if (leftTile.arr[1] > 0) ++upLeftCorner
+        }
+
+        if (rightTile === undefined) {
+            right = 0
+            upRightCorner = 2
+        } else {
+            if (rightTile.arr[2] > 0) ++right
+            if (rightTile.arr[0] > 0) ++upRightCorner
+        }
+        
+        if (upTile === undefined) {
+            up = 0
+            upLeftCorner = 2
+        } else {
+            if (upTile.arr[7] > 0) ++up
+            if (upTile.arr[5] > 0) ++upLeftCorner
+        }
+        
+        if (downTile === undefined) {
+            down = 0
+            downLeftCorner = 2 // so surely ok
+        } else {
+            if (downTile.arr[6] > 0) ++down;
+            if (downTile.arr[4] > 0) ++downLeftCorner
+        }
+
+        if (upRightTile === undefined) upRightCorner = 2
+        else if (upRightTile.arr[5] > 0) ++upRightCorner
+        if (downLeftTile === undefined) downLeftCorner = 2
+        else if (downLeftTile.arr[1] > 0) ++downLeftCorner
+
+        return left == 0 && right == 0 && up == 0 && down == 0 && upLeftCorner != 1 && upRightCorner != 1 && downLeftCorner != 1
+    }
+
     draw(ctx) {
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
-                if (tile !== null) {
+                if (tile != null) { // also false when undefined
                     tile.draw(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
                 }
             }
