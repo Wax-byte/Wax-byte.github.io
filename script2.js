@@ -1,5 +1,13 @@
 'use strict';
 
+
+Math.seedrandom('any string you like'); //setting the random seed
+
+function randomIntFromInterval(min,upperbound)
+{
+  return Math.floor(Math.random()*(upperbound-min)+min);
+}
+
 // a quadrant will be a triple
 // (x, y, q)
 
