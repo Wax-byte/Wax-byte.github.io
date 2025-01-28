@@ -8,6 +8,8 @@ function randomIntFromInterval(min,upperbound)
   return Math.floor(Math.random()*(upperbound-min)+min);
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
+
 // a quadrant will be a triple
 // (x, y, q)
 
@@ -81,17 +83,17 @@ class World {
         if (matY < 0) return;
         if (matY >= this.matHeight) return;
 
-        shuffle(tiles) // shuffle remaining tiles
         for(let tileIdx = 0; true; ++tileIdx) {
             let tile = tiles[tileIdx]
             
             //tile.rotation = getRandomInt(4)
             //this.setTile(matX, matY, tile)
-
-            if (this.tileAllowed(matX, matY, tile) || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
+            const isLastTile = tileIdx == tiles.length-1
+            if (this.tileAllowed(matX, matY, tile) || isLastTile) { // when end reached just place the last evaluated one
                 this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
+                if (isLastTile) shuffle(tiles) // shuffle remaining tiles
                 break
             }
         }
@@ -278,8 +280,7 @@ for (let i = 0; i < 5 * mult; ++i) // vert2 (new)
     tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
 for (let i = 0; i < 3 * mult; ++i) // vert-T (new)
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
-
-const getRandomInt = (max) => Math.floor(Math.random() * max)
+shuffle(tiles)
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
