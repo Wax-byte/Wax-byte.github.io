@@ -38,7 +38,7 @@ class World {
     }
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
-    create() {
+    ;*create() { // * makes it a generator method
         let matX = Math.floor(this.matWidth / 2);
         let matY = Math.floor(this.matHeight / 2);
         const stopLength = 10;
@@ -48,10 +48,12 @@ class World {
             if (length >= stopLength) break
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
+                yield
                 ++matY;
             }
             for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
+                yield
                 --matX;
             }
             ++length
@@ -59,15 +61,16 @@ class World {
             if (length >= stopLength) break
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
+                yield
                 --matY;
             }
             for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
+                yield
                 ++matX;
             }
             ++length
         }
-
     }
 
     placeTile(matX, matY) {
@@ -291,6 +294,15 @@ function shuffle(array) {
 
 const rotateLeft = (array, positions) => array.slice(positions).concat(array.slice(0, positions))
 
-world.create()
+// Get the button element
+const button = document.getElementById('myButton');
 
-world.draw(ctx)
+const iterator = world.create();
+
+// Add a click event listener to the button
+button.addEventListener('click', () => {
+    iterator.next();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    world.draw(ctx);
+    //alert('Button was clicked!');
+});
