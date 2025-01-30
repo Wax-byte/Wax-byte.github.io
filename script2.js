@@ -92,6 +92,7 @@ class World {
             //this.setTile(matX, matY, tile)
             const isLastTile = tileIdx == tiles.length-1
             if (this.tileAllowed(matX, matY, tile) || isLastTile) { // when end reached just place the last evaluated one
+                tile.failed = tileIdx;
                 this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
@@ -211,6 +212,7 @@ class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
         this.arr = arr
         this.rotation = 0
+        this.failed = 0
     }
 
     drawLineSegment(ctx, x, y, dx, dy) {
@@ -252,6 +254,10 @@ class Tile { // Tegel
         this.drawLineOrCircle(ctx, middleX - 1, middleY    , 0, 1, this.arr[5])
         this.drawLineOrCircle(ctx, middleX    , middleY - 1, 0, 1, this.arr[6])
         this.drawLineOrCircle(ctx, middleX    , middleY    , 0, 1, this.arr[7])
+
+        ctx.font = '30px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText(`${this.failed}`, middleX * 24 - 12, middleY * 24 + 12);
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
