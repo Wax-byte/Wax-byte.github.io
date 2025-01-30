@@ -91,8 +91,10 @@ class World {
             //tile.rotation = getRandomInt(4)
             //this.setTile(matX, matY, tile)
             const isLastTile = tileIdx == tiles.length-1
-            if (this.tileAllowed(matX, matY, tile) || isLastTile) { // when end reached just place the last evaluated one
+            const isAllowed = this.tileAllowed(matX, matY, tile)
+            if (isAllowed || isLastTile) { // when end reached just place the last evaluated one
                 tile.failed = tileIdx;
+                tile.allowed = isAllowed
                 this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
@@ -213,6 +215,7 @@ class Tile { // Tegel
         this.arr = arr
         this.rotation = 0
         this.failed = 0
+        this.allowed = false
     }
 
     drawLineSegment(ctx, x, y, dx, dy) {
@@ -256,7 +259,7 @@ class Tile { // Tegel
         this.drawLineOrCircle(ctx, middleX    , middleY    , 0, 1, this.arr[7])
 
         ctx.font = '30px Arial';
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = this.allowed ? 'green' : 'red';
         ctx.fillText(`${this.failed}`, middleX * 24 - 12, middleY * 24 + 12);
     }
 
