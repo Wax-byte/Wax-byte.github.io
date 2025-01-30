@@ -187,7 +187,7 @@ class World {
                 } else {
                     const middleX = 1 + matX*2
                     const middleY = 1 + matY*2
-                    ctx.fillStyle = "#000000"
+                    ctx.fillStyle = "#e0e0e0"
                     ctx.beginPath()
                     ctx.moveTo(middleX * 24 - 24, middleY * 24 - 24)
                     ctx.lineTo(middleX * 24 + 24, middleY * 24 - 24)
