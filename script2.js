@@ -205,7 +205,7 @@ class World {
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 
-var world = new World(10, 10) //new World(canvas.width / 48 / 2 - 1, canvas.height / 48 - 1)
+var world = new World(8, 8)
 
 class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
@@ -259,29 +259,29 @@ class Tile { // Tegel
 
 var mult = 1 // (world.matWidth * world.matHeight) / 33
 var tiles = []
-for (let i = 0; i < 16 * mult; ++i) // empty
+for (let i = 0; i < 9 * mult; ++i) // empty
     tiles.push(new Tile([0, 0, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 17 * mult; ++i) // up line
+for (let i = 0; i < 12 * mult; ++i) // up line
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 0, 0]))
-for (let i = 0; i < 17 * mult; ++i) // left line
+for (let i = 0; i < 12 * mult; ++i) // left line
     tiles.push(new Tile([0, 0, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 12 * mult; ++i) // big corner
+for (let i = 0; i < 9 * mult; ++i) // big corner
     tiles.push(new Tile([1, 1, 0, 0, 1, 1, 0, 0]))
-for (let i = 0; i < 6 * mult; ++i) // up up
+for (let i = 0; i < 3 * mult; ++i) // up up
     tiles.push(new Tile([1, 1, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 6 * mult; ++i) // left left
+for (let i = 0; i < 3 * mult; ++i) // left left
     tiles.push(new Tile([0, 1, 0, 0, 1, 1, 1, 1]))
-for (let i = 0; i < 5 * mult; ++i) // hor
+for (let i = 0; i < 3 * mult; ++i) // hor
     tiles.push(new Tile([0, 0, 1, 1, 0, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // hor2 (new)
+for (let i = 0; i < 3 * mult; ++i) // hor2 (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 0, 0, 0]))
-for (let i = 0; i < 3 * mult; ++i) // hor-T (new)
+for (let i = 0; i < 2 * mult; ++i) // hor-T (new)
     tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
-for (let i = 0; i < 5 * mult; ++i) // vert
+for (let i = 0; i < 3 * mult; ++i) // vert
     tiles.push(new Tile([0, 1, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 5 * mult; ++i) // vert2 (new)
+for (let i = 0; i < 3 * mult; ++i) // vert2 (new)
     tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
-for (let i = 0; i < 3 * mult; ++i) // vert-T (new)
+for (let i = 0; i < 2 * mult; ++i) // vert-T (new)
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
 shuffle(tiles)
 
