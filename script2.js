@@ -178,6 +178,7 @@ class World {
     }
 
     draw(ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 let tile = this.getTile(matX, matY)
@@ -303,7 +304,27 @@ const iterator = world.create();
 // Add a click event listener to the button
 button.addEventListener('click', () => {
     iterator.next();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     world.draw(ctx);
     //alert('Button was clicked!');
 });
+
+
+// Function to handle the click event
+function handleClick(event) {
+    // Get the canvas's bounding rectangle
+    const rect = canvas.getBoundingClientRect();
+
+    // Calculate the click position
+    const x = Math.floor((event.clientX - rect.left) / 48);
+    const y = Math.floor((event.clientY - rect.top) / 48);
+
+    //console.log(`Clicked at position: (${x}, ${y})`);
+
+    world.placeTile(x, y);
+    world.draw(ctx);
+}
+
+// Add the click event listener to the canvas
+canvas.addEventListener('click', handleClick);
+
+world.draw(ctx);
