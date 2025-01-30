@@ -319,23 +319,28 @@ button.addEventListener('click', () => {
     //alert('Button was clicked!');
 });
 
+let mouseDown = false;
+function handleMouseDown(event) {
+    mouseDown = true;
+    handleMouseMove(event);
+}
 
-// Function to handle the click event
-function handleClick(event) {
-    // Get the canvas's bounding rectangle
+function handleMouseUp(event) {
+    mouseDown = false;
+}
+
+function handleMouseMove(event) {
+    if (!mouseDown) return
+
     const rect = canvas.getBoundingClientRect();
-
-    // Calculate the click position
     const x = Math.floor((event.clientX - rect.left) / 48);
     const y = Math.floor((event.clientY - rect.top) / 48);
-
-    //console.log(`Clicked at position: (${x}, ${y})`);
-
     world.placeTile(x, y);
     world.draw(ctx);
 }
 
-// Add the click event listener to the canvas
-canvas.addEventListener('click', handleClick);
+canvas.addEventListener('mousedown', handleMouseDown);
+canvas.addEventListener('mouseup', handleMouseUp);
+canvas.addEventListener('mousemove', handleMouseMove);
 
 world.draw(ctx);
