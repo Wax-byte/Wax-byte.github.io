@@ -83,6 +83,8 @@ class World {
         if (matY < 0) return;
         if (matY >= this.matHeight) return;
 
+        if (this.getTile(matX, matY) !== undefined) return
+
         for(let tileIdx = 0; true; ++tileIdx) {
             let tile = tiles[tileIdx]
             
