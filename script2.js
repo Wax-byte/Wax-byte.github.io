@@ -23,18 +23,6 @@ class World {
         this.arr = new Array(matWidth * matHeight)
     }
 
-    worldToMatrix(worldX, worldY) {
-        const matX = worldX
-        const matY = Math.floor(worldY / 2)
-        return [matX, matY]
-    }
-
-    matrixToWorld(matX, matY) {
-        const worldX = matX - Math.floor((matY+1) / 2)
-        const worldY = matX + Math.floor(matY / 2)
-        return [worldX, worldY]
-    }
-
     getTile = (worldX, worldY) => this.arr[worldX + worldY*this.matWidth]
     
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
