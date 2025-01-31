@@ -114,6 +114,7 @@ class World {
         if (leftTile === undefined) {
             left = 0
             upLeftCorner = 2
+            downLeftCorner = 2
         } else {
             if (leftTile.arr[3] > 0) ++left
             if (leftTile.arr[1] > 0) ++upLeftCorner
@@ -133,6 +134,7 @@ class World {
         if (upTile === undefined) {
             up = 0
             upLeftCorner = 2
+            upRightCorner = 2
         } else {
             if (upTile.arr[7] > 0) ++up
             if (upTile.arr[5] > 0) ++upLeftCorner
