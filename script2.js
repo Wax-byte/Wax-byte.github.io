@@ -193,26 +193,30 @@ class Tile { // Tegel
         this.allowed = false
     }
 
-    drawLineSegment(ctx, x, y, dx, dy) {
+    drawLineSegment(ctx, tileX, tileY, tileDx, tileDy) {
+        const x = tileX * 24
+        const y = tileY * 24
         ctx.strokeStyle = "black"
         ctx.beginPath()
-        ctx.moveTo(x * 24, y * 24)
-        ctx.lineTo(x * 24 + dx * 24, y * 24 + dy * 24)
+        ctx.moveTo(x, y)
+        ctx.lineTo(x + tileDx * 24, y + tileDy * 24)
         ctx.stroke()
     }
 
-    drawCircle(ctx, x, y, dx, dy) {
+    drawCircle(ctx, tileX, tileY, tileDx, tileDy) {
+        const x = tileX * 24
+        const y = tileY * 24
         ctx.strokeStyle = "black"
         ctx.beginPath()
-        ctx.arc(x * 24 + dx * 11, y * 24 + dy * 11, 9, 0, 2 * Math.PI)
+        ctx.arc(x + tileDx * 11, y + tileDy * 11, 9, 0, 2 * Math.PI)
         ctx.stroke()
     }
 
-    drawLineOrCircle(ctx, x, y, dx, dy, lineType) {
+    drawLineOrCircle(ctx, tileX, tileY, tileDx, tileDy, lineType) {
         if (lineType >= 1)
-            this.drawLineSegment(ctx, x, y, dx, dy)
+            this.drawLineSegment(ctx, tileX, tileY, tileDx, tileDy)
         if (lineType == 2)
-            this.drawCircle(ctx, x, y, dx, dy)
+            this.drawCircle(ctx, tileX, tileY, tileDx, tileDy)
     }
 
     draw(ctx, middleX, middleY) {
