@@ -20,7 +20,7 @@ class World {
     ;*create() { // * makes it a generator method
         const matX = Math.floor(this.matWidth / 2)
         const matY = Math.floor(this.matHeight / 2)
-        const stopLength = 10
+        const stopLength = Math.max(this.matWidth, this.matHeight)
         let length = 0
 
         while (true) {
