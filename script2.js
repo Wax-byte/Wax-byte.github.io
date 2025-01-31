@@ -35,9 +35,8 @@ class World {
         return [worldX, worldY]
     }
 
-    getTile(worldX, worldY) {
-        return this.arr[worldX + worldY*this.matWidth]
-    }
+    getTile = (worldX, worldY) => this.arr[worldX + worldY*this.matWidth]
+    
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     ;*create() { // * makes it a generator method
