@@ -9,9 +9,6 @@ function randomIntFromInterval(min,upperbound)
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
 
-// actually multiple arrays
-var quadSets = []
-
 class World {
     constructor(matWidth, matHeight) {
         this.matWidth = matWidth
@@ -24,8 +21,8 @@ class World {
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     ;*create() { // * makes it a generator method
-        let matX = Math.floor(this.matWidth / 2);
-        let matY = Math.floor(this.matHeight / 2);
+        const matX = Math.floor(this.matWidth / 2);
+        const matY = Math.floor(this.matHeight / 2);
         const stopLength = 10;
         let length = 0;
 
@@ -69,7 +66,7 @@ class World {
         if (this.getTile(matX, matY) !== undefined) return
 
         for(let tileIdx = 0; true; ++tileIdx) {
-            let tile = tiles[tileIdx]
+            const tile = tiles[tileIdx]
             
             //tile.rotation = getRandomInt(4)
             //this.setTile(matX, matY, tile)
@@ -167,7 +164,7 @@ class World {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
-                let tile = this.getTile(matX, matY)
+                const tile = this.getTile(matX, matY)
                 if (tile != null) { // also false when undefined
                     tile.draw(ctx, 1 + matX*2, 1 + matY*2) // +1 +1 for a bit of offset
                 } else {
@@ -189,7 +186,7 @@ class World {
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 
-var world = new World(8, 8)
+const world = new World(8, 8)
 
 class Tile { // Tegel
     constructor(arr) { // array [0,1,2,0] is NW niets, NE muur, SE deur, SW niets
@@ -247,8 +244,8 @@ class Tile { // Tegel
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
 }
 
-var mult = 1 // (world.matWidth * world.matHeight) / 33
-var tiles = []
+const mult = 1 // (world.matWidth * world.matHeight) / 33
+const tiles = []
 for (let i = 0; i < 9 * mult; ++i) // empty
     tiles.push(new Tile([0, 0, 0, 0, 0, 0, 0, 0]))
 for (let i = 0; i < 12 * mult; ++i) // up line
@@ -278,7 +275,7 @@ shuffle(tiles)
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         // Generate a random index from 0 to i
-        let j = getRandomInt(i + 1)
+        const j = getRandomInt(i + 1)
         
         // Swap elements array[i] and array[j]
         ;[array[i], array[j]] = [array[j], array[i]] // semicolon needed
