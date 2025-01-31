@@ -2,10 +2,7 @@
 
 //Math.seedrandom('any string you like1'); //setting the random seed
 
-function randomIntFromInterval(min,upperbound)
-{
-  return Math.floor(Math.random()*(upperbound-min)+min);
-}
+const randomIntFromInterval = (min,upperbound) => Math.floor(Math.random()*(upperbound-min)+min);
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
 
