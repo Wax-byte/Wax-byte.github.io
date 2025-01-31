@@ -104,11 +104,11 @@ class World {
         if (tile.arr[4] > 0) ++upLeftCorner 
         if (tile.arr[5] > 0) ++downLeftCorner 
 
-        const leftTile = this.getTile(matX - 1, matY)
-        const rightTile = this.getTile(matX + 1, matY)
-        const upTile = this.getTile(matX, matY - 1)
-        const downTile = this.getTile(matX, matY + 1)
-        const upRightTile = this.getTile(matX + 1, matY - 1)
+        const leftTile     = this.getTile(matX - 1, matY    )
+        const rightTile    = this.getTile(matX + 1, matY    )
+        const upTile       = this.getTile(matX    , matY - 1)
+        const downTile     = this.getTile(matX    , matY + 1)
+        const upRightTile  = this.getTile(matX + 1, matY - 1)
         const downLeftTile = this.getTile(matX - 1, matY + 1)
 
         if (leftTile === undefined) {
