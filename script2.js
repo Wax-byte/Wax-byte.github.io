@@ -1,8 +1,8 @@
 'use strict';
 
-//Math.seedrandom('any string you like1'); //setting the random seed
+//Math.seedrandom('any string you like1') //setting the random seed
 
-const randomIntFromInterval = (min,upperbound) => Math.floor(Math.random()*(upperbound-min)+min);
+const randomIntFromInterval = (min,upperbound) => Math.floor(Math.random()*(upperbound-min)+min)
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
 
@@ -18,22 +18,22 @@ class World {
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     ;*create() { // * makes it a generator method
-        const matX = Math.floor(this.matWidth / 2);
-        const matY = Math.floor(this.matHeight / 2);
-        const stopLength = 10;
-        let length = 0;
+        const matX = Math.floor(this.matWidth / 2)
+        const matY = Math.floor(this.matHeight / 2)
+        const stopLength = 10
+        let length = 0
 
         while (true) {
             if (length >= stopLength) break
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 yield
-                ++matY;
+                ++matY
             }
             for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
                 yield
-                --matX;
+                --matX
             }
             ++length
 
@@ -41,12 +41,12 @@ class World {
             for (let i = 0; i < length; ++i) {
                 this.placeTile(matX, matY)
                 yield
-                --matY;
+                --matY
             }
             for (let i = 0; i <= length; ++i) {
                 this.placeTile(matX, matY)
                 yield
-                ++matX;
+                ++matX
             }
             ++length
         }
@@ -55,10 +55,10 @@ class World {
     placeTile(matX, matY) {
         if (tiles.length == 0) return // when empty
 
-        if (matX < 0) return;
-        if (matX >= this.matWidth) return;
-        if (matY < 0) return;
-        if (matY >= this.matHeight) return;
+        if (matX < 0) return
+        if (matX >= this.matWidth) return
+        if (matY < 0) return
+        if (matY >= this.matHeight) return
 
         if (this.getTile(matX, matY) !== undefined) return
 
@@ -69,7 +69,7 @@ class World {
             //this.setTile(matX, matY, tile)
             const isAllowed = this.tileAllowed(matX, matY, tile)
             if (isAllowed || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
-                tile.failed = tileIdx;
+                tile.failed = tileIdx
                 tile.allowed = isAllowed
                 this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
@@ -85,14 +85,14 @@ class World {
         let up = 0
         let down = 0
 
-        if (tile.arr[0] > 0) ++up;
-        if (tile.arr[1] > 0) ++up;
-        if (tile.arr[2] > 0) ++left;
-        if (tile.arr[3] > 0) ++right;
-        if (tile.arr[4] > 0) ++left;
-        if (tile.arr[5] > 0) ++left;
-        if (tile.arr[6] > 0) ++up;
-        if (tile.arr[7] > 0) ++down;
+        if (tile.arr[0] > 0) ++up
+        if (tile.arr[1] > 0) ++up
+        if (tile.arr[2] > 0) ++left
+        if (tile.arr[3] > 0) ++right
+        if (tile.arr[4] > 0) ++left
+        if (tile.arr[5] > 0) ++left
+        if (tile.arr[6] > 0) ++up
+        if (tile.arr[7] > 0) ++down
 
         let upLeftCorner = 0
         let upRightCorner = 0
@@ -142,9 +142,9 @@ class World {
             down = 0
             downLeftCorner = 2 // so surely ok
         } else {
-            if (downTile.arr[0] > 0) ++down;
-            if (downTile.arr[1] > 0) ++down;
-            if (downTile.arr[6] > 0) ++down;
+            if (downTile.arr[0] > 0) ++down
+            if (downTile.arr[1] > 0) ++down
+            if (downTile.arr[6] > 0) ++down
             if (downTile.arr[0] > 0) ++downLeftCorner
             if (downTile.arr[4] > 0) ++downLeftCorner
         }
@@ -158,7 +158,7 @@ class World {
     }
 
     draw(ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         for (let matY = 0 ; matY < this.matHeight; ++matY) {
             for (let matX = 0 ; matX < this.matWidth; ++matX) {
                 const tile = this.getTile(matX, matY)
@@ -237,9 +237,9 @@ class Tile { // Tegel
         this.drawLineOrCircle(ctx, middleX    , middleY - 1, 0, 1, this.arr[6])
         this.drawLineOrCircle(ctx, middleX    , middleY    , 0, 1, this.arr[7])
 
-        ctx.font = '30px Arial';
-        ctx.fillStyle = this.allowed ? 'green' : 'red';
-        ctx.fillText(`${this.failed}`, middleX * 24 - 12, middleY * 24 + 12);
+        ctx.font = '30px Arial'
+        ctx.fillStyle = this.allowed ? 'green' : 'red'
+        ctx.fillText(`${this.failed}`, middleX * 24 - 12, middleY * 24 + 12)
     }
 
     getSegment = (i) => this.arr[(i + this.rotation) % 4]
@@ -287,39 +287,39 @@ function shuffle(array) {
 const rotateLeft = (array, positions) => array.slice(positions).concat(array.slice(0, positions))
 
 // Get the button element
-const button = document.getElementById('myButton');
+const button = document.getElementById('myButton')
 
-const iterator = world.create();
+const iterator = world.create()
 
 // Add a click event listener to the button
 button.addEventListener('click', () => {
-    iterator.next();
-    world.draw(ctx);
-    //alert('Button was clicked!');
-});
+    iterator.next()
+    world.draw(ctx)
+    //alert('Button was clicked!')
+})
 
-let mouseDown = false;
+let mouseDown = false
 function handleMouseDown(event) {
-    mouseDown = true;
-    handleMouseMove(event);
+    mouseDown = true
+    handleMouseMove(event)
 }
 
 function handleMouseUp(event) {
-    mouseDown = false;
+    mouseDown = false
 }
 
 function handleMouseMove(event) {
     if (!mouseDown) return
 
-    const rect = canvas.getBoundingClientRect();
-    const x = Math.floor((event.clientX - rect.left) / 48);
-    const y = Math.floor((event.clientY - rect.top) / 48);
-    world.placeTile(x, y);
-    world.draw(ctx);
+    const rect = canvas.getBoundingClientRect()
+    const x = Math.floor((event.clientX - rect.left) / 48)
+    const y = Math.floor((event.clientY - rect.top) / 48)
+    world.placeTile(x, y)
+    world.draw(ctx)
 }
 
-canvas.addEventListener('mousedown', handleMouseDown);
-canvas.addEventListener('mouseup', handleMouseUp);
-canvas.addEventListener('mousemove', handleMouseMove);
+canvas.addEventListener('mousedown', handleMouseDown)
+canvas.addEventListener('mouseup', handleMouseUp)
+canvas.addEventListener('mousemove', handleMouseMove)
 
-world.draw(ctx);
+world.draw(ctx)
