@@ -18,8 +18,8 @@ class World {
     setTile = (x, y, tile) => this.arr[x + y*this.matWidth] = tile
 
     ;*create() { // * makes it a generator method
-        const matX = Math.floor(this.matWidth / 2)
-        const matY = Math.floor(this.matHeight / 2)
+        let matX = Math.floor(this.matWidth / 2)
+        let matY = Math.floor(this.matHeight / 2)
         const stopLength = Math.max(this.matWidth, this.matHeight)
         let length = 0
 
