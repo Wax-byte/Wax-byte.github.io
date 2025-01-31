@@ -271,6 +271,34 @@ for (let i = 0; i < 3 * mult; ++i) // vert2 (new)
     tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
 for (let i = 0; i < 2 * mult; ++i) // vert-T (new)
     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
+tiles.length = 0
+
+for (let i = 0; i < 9 * mult; ++i) // empty
+    tiles.push(new Tile([0, 0, 0, 0, 0, 0, 0, 0]))
+// for (let i = 0; i < 12 * mult; ++i) // up line
+//     tiles.push(new Tile([1, 1, 0, 0, 0, 0, 0, 0]))
+// for (let i = 0; i < 12 * mult; ++i) // left line
+//     tiles.push(new Tile([0, 0, 0, 0, 1, 1, 0, 0]))
+for (let i = 0; i < 11 * mult; ++i) // big corner
+    tiles.push(new Tile([1, 1, 0, 0, 1, 1, 0, 0]))
+for (let i = 0; i < 6 * mult; ++i) // up up
+    tiles.push(new Tile([1, 1, 1, 1, 0, 1, 0, 0]))
+for (let i = 0; i < 6 * mult; ++i) // left left
+    tiles.push(new Tile([0, 1, 0, 0, 1, 1, 1, 1]))
+for (let i = 0; i < 6 * mult; ++i) // hor
+    tiles.push(new Tile([0, 0, 1, 1, 0, 1, 0, 0]))
+for (let i = 0; i < 6 * mult; ++i) // hor2 (new)
+    tiles.push(new Tile([0, 0, 1, 1, 1, 0, 0, 0]))
+for (let i = 0; i < 4 * mult; ++i) // hor-T (new)
+    tiles.push(new Tile([0, 0, 1, 1, 1, 1, 0, 0]))
+for (let i = 0; i < 6 * mult; ++i) // vert
+    tiles.push(new Tile([0, 1, 0, 0, 0, 0, 1, 1]))
+for (let i = 0; i < 6 * mult; ++i) // vert2 (new)
+    tiles.push(new Tile([1, 0, 0, 0, 0, 0, 1, 1]))
+for (let i = 0; i < 4 * mult; ++i) // vert-T (new)
+    tiles.push(new Tile([1, 1, 0, 0, 0, 0, 1, 1]))
+
+
 shuffle(tiles)
 
 function shuffle(array) {
