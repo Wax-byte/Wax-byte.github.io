@@ -1,6 +1,5 @@
 'use strict';
 
-
 //Math.seedrandom('any string you like1'); //setting the random seed
 
 function randomIntFromInterval(min,upperbound)
@@ -9,9 +8,6 @@ function randomIntFromInterval(min,upperbound)
 }
 
 const getRandomInt = (max) => Math.floor(Math.random() * max)
-
-// a quadrant will be a triple
-// (x, y, q)
 
 // actually multiple arrays
 var quadSets = []
@@ -77,15 +73,13 @@ class World {
             
             //tile.rotation = getRandomInt(4)
             //this.setTile(matX, matY, tile)
-            const isLastTile = tileIdx == tiles.length-1
             const isAllowed = this.tileAllowed(matX, matY, tile)
-            if (isAllowed || isLastTile) { // when end reached just place the last evaluated one
+            if (isAllowed || tileIdx == tiles.length-1) { // when end reached just place the last evaluated one
                 tile.failed = tileIdx;
                 tile.allowed = isAllowed
                 this.setTile(matX, matY, tile)
                 //tile.rotation = maxRotation
                 tiles.splice(tileIdx, 1)
-                if (isLastTile) shuffle(tiles) // shuffle remaining tiles
                 break
             }
         }
